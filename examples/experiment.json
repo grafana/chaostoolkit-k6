@@ -1,0 +1,35 @@
+{
+  "version": "1.0.0",
+  "title": "k6 test",
+  "description": "N/A",
+  "tags": [],
+  "contributions": {
+    "reliability": "medium",
+    "security": "none",
+    "scalability": "high"
+  },
+  "steady-state-hypothesis": {
+    "title": "api is alive and healthy",
+    "probes": [
+      {
+        "type": "probe",
+        "name": "api-is-responding-with-http-status-200",
+        "tolerance": true,
+        "provider": {
+          "type": "python",
+          "module": "chaosk6.probes",
+          "func": "http",
+          "arguments": {
+            "endpoint": "https://test-api.k6.io",
+            "method": "get",
+            "status": 200,
+            "headers": {
+              "Content-Type": "application/json"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "method": []
+}
