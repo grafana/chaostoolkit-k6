@@ -14,7 +14,7 @@ def http(
     status: int = 200,
     body: str = "",
     headers: dict = {},
-):
+) -> bool:
     """
     Probe an endpoint to make sure it responds to an http request
     with the expected HTTP status code. Depending on the endpoint and your
