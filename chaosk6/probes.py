@@ -14,6 +14,8 @@ def http(
     status: int = 200,
     body: str = "",
     headers: dict = {},
+    vus: int = 1,
+    duration: str = "",
 ) -> bool:
     """
     Probe an endpoint to make sure it responds to an http request
@@ -28,6 +30,11 @@ def http(
         A valid http request method name, like GET, POST, PUT, DELETE, OPTIONS, or PATCH
     status : int
         The expected HTTP Response status code.
+    vus : int
+        The amount of concurrent virtual users accessing the endpoint
+    duration : str
+        How long to probe the endpoint. Expressed as a duration string,
+        i.e "20s", "1m", "1h" etc.
     """
     if status < 100 or status > 999:
         raise Exception("Invalid HTTP Response status code expection")
@@ -42,7 +49,9 @@ def http(
         CHAOS_K6_METHOD=method,
         CHAOS_K6_STATUS=str(status),
         CHAOS_K6_BODY=body,
-        CHAOS_K6_HEADERS=json.dumps(headers)
+        CHAOS_K6_HEADERS=json.dumps(headers),
+        CHAOS_K6_VUS=str(vus),
+        CHAOS_K6_DURATION=duration,
     )
 
     scriptDir = os.path.dirname(os.path.realpath(__file__))

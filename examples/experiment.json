@@ -23,6 +23,8 @@
             "endpoint": "https://test-api.k6.io",
             "method": "get",
             "status": 200,
+            "vus": 10,
+            "duration": "1s",
             "headers": {
               "Content-Type": "application/json"
             }
