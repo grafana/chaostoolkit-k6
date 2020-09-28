@@ -16,6 +16,8 @@ def http(
     headers: dict = {},
     vus: int = 1,
     duration: str = "",
+    debug: bool = False,
+    timeout: int = 1,
 ) -> bool:
     """
     Probe an endpoint to make sure it responds to an http request
@@ -35,6 +37,8 @@ def http(
     duration : str
         How long to probe the endpoint. Expressed as a duration string,
         i.e "20s", "1m", "1h" etc.
+    timeout : int
+        Timeout duration for http requests. Defaults to 1 second
     """
     if status < 100 or status > 999:
         raise Exception("Invalid HTTP Response status code expection")
@@ -52,6 +56,7 @@ def http(
         CHAOS_K6_HEADERS=json.dumps(headers),
         CHAOS_K6_VUS=str(vus),
         CHAOS_K6_DURATION=duration,
+        CHAOS_K6_HTTP_TIMEOUT=str(timeout),
     )
 
     scriptDir = os.path.dirname(os.path.realpath(__file__))
@@ -59,7 +64,10 @@ def http(
     cmd = ["k6", "run", "{}/scripts/probe.js".format(scriptDir)]
 
     with subprocess.Popen(
-        cmd, env=env, stderr=subprocess.STDOUT, stdout=subprocess.PIPE
+        cmd,
+        env=env,
+        stderr=subprocess.STDOUT,
+        stdout=None if debug == True else subprocess.PIPE,
     ) as p:
         try:
             p.wait(10)
