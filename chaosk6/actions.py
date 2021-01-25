@@ -67,10 +67,4 @@ def _runScript(
     with subprocess.Popen(
         command, stderr=subprocess.STDOUT, stdout=subprocess.PIPE, env=environ
     ) as p:
-        try:
-            p.wait(duration + 3)
-        except subprocess.TimeoutExpired:
-            logger.error("Stress test timed out")
-            return False
-        p.communicate()
-        return p.returncode == 0
+        return p.returncode is None

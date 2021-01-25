@@ -44,7 +44,7 @@ with io.open("requirements.txt") as f:
 
 setup_params = dict(
     name=name,
-    version="0.1.4",
+    version="0.2.0",
     description=desc,
     long_description=long_desc,
     classifiers=classifiers,

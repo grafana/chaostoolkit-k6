@@ -69,8 +69,4 @@ def http(
         stderr=subprocess.STDOUT,
         stdout=None if debug == True else subprocess.PIPE,
     ) as p:
-        try:
-            p.wait(10)
-        except subprocess.TimeoutExpired:
-            assert p.returncode is None
-        return p.returncode == 0
+        return p.returncode is None
