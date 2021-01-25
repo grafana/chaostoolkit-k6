@@ -22,18 +22,7 @@ $ pip install -U chaostoolkit-k6
 
 ## Usage
 
-To use the probes and actions from this package, add the following to your
-experiment file:
-
-```json
-
-
-```
-
-That's it!
-
 Please explore the code to see existing probes and actions.
-
 ## Configuration
 
 ## Contribute

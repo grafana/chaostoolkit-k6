@@ -1,7 +1,6 @@
+requests-mock
 coverage
 pycodestyle
-pytest >= 2.8
-pytest - cov
-pytest - sugar
-requests
-requests_mock
+pytest>=6.0
+pytest-cov
+pytest-sugar

@@ -35,8 +35,8 @@ needs_pytest = set(["pytest", "test"]).intersection(sys.argv)
 pytest_runner = ["pytest_runner"] if needs_pytest else []
 
 test_require = []
-with io.open("requirements-dev.txt") as f:
-    test_require = [l.strip() for l in f if not l.startswith("#")]
+with io.open('requirements-dev.txt') as f:
+    test_require = [l.strip() for l in f if not l.startswith('#')]
 
 install_require = []
 with io.open("requirements.txt") as f:
@@ -44,7 +44,7 @@ with io.open("requirements.txt") as f:
 
 setup_params = dict(
     name=name,
-    version="0.1.0",
+    version="0.1.2",
     description=desc,
     long_description=long_desc,
     classifiers=classifiers,

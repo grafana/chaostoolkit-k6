@@ -12,7 +12,7 @@ from chaoslib.types import Discovery, DiscoveredActivities, Secrets
 """Top-level package for chaostoolkit-k6."""
 
 __all__ = ["discover"]
-__version__ = "0.0.1"
+__version__ = "0.1.2"
 
 
 def discover(discover_system: bool = True) -> Discovery:
@@ -28,6 +28,6 @@ def discover(discover_system: bool = True) -> Discovery:
 
 def load_exported_activities() -> List[DiscoveredActivities]:
     activities = []
-    activities.extend(discover_actions("chaosk6.generate.actions"))
+    activities.extend(discover_actions("chaosk6.actions"))
     activities.extend(discover_probes("chaosk6.probes"))
     return activities

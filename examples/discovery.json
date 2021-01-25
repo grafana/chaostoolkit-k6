@@ -20,7 +20,7 @@
     {
       "type": "action",
       "name": "runScript",
-      "mod": "chaosk6.generate.actions",
+      "mod": "chaosk6.actions",
       "doc": null,
       "arguments": [
         {
@@ -43,7 +43,7 @@
     {
       "type": "action",
       "name": "stressEndpoint",
-      "mod": "chaosk6.generate.actions",
+      "mod": "chaosk6.actions",
       "doc": null,
       "arguments": [
         {
