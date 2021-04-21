@@ -2,9 +2,6 @@ import subprocess
 import os
 import json
 
-from logzero import logger
-from pathlib import Path
-
 __all__ = ["http"]
 
 
@@ -39,13 +36,14 @@ def http(
         i.e "20s", "1m", "1h" etc.
     timeout : int
         Timeout duration for http requests. Defaults to 1 second
-    """
+    """  # noqa: E501
     if status < 100 or status > 999:
-        raise Exception("Invalid HTTP Response status code expection")
-    if method.lower() not in ["get", "post", "put", "patch", "delete", "options"]:
-        raise Exception("Invalid HTTP Request method")
-    if endpoint == None:
-        raise Exception("Endpoint is a required argument")
+        raise ValueError("Invalid HTTP Response status code expection")
+    if method.lower() not in [
+            "get", "post", "put", "patch", "delete", "options"]:
+        raise ValueError("Invalid HTTP Request method")
+    if endpoint is None:
+        raise ValueError("Endpoint is a required argument")
 
     env = dict(
         **os.environ,
@@ -67,6 +65,6 @@ def http(
         cmd,
         env=env,
         stderr=subprocess.STDOUT,
-        stdout=None if debug == True else subprocess.PIPE,
+        stdout=None if debug is True else subprocess.PIPE,
     ) as p:
         return p.returncode is None
