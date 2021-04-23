@@ -7,7 +7,7 @@ from chaoslib.discovery.discover import (
     discover_probes,
     initialize_discovery_result,
 )
-from chaoslib.types import Discovery, DiscoveredActivities, Secrets
+from chaoslib.types import Discovery, DiscoveredActivities
 
 """Top-level package for chaostoolkit-k6."""
 
@@ -21,7 +21,8 @@ def discover(discover_system: bool = True) -> Discovery:
     """
     logger.info("Discovering capabilities from chaostoolkit-k6")
 
-    discovery = initialize_discovery_result("chaostoolkit-k6", __version__, "k6")
+    discovery = initialize_discovery_result(
+        "chaostoolkit-k6", __version__, "k6")
     discovery["activities"].extend(load_exported_activities())
     return discovery
 
