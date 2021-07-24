@@ -10,7 +10,8 @@ export const options = {
 };
 
 export default function () {
+  console.log(__ENV.CHAOS_K6_URL)
   const r = http.get(__ENV.CHAOS_K6_URL);
-  console.log(r.status);
+  console.log(`Status: ${r.status}`);
   failures.add(r.status !== 200);
 }
