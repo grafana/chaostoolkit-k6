@@ -8,7 +8,7 @@ from pathlib import Path
 __all__ = ["run_script", "stress_endpoint"]
 
 
-def run_script(scriptPath: str = None, vus: int = 1, duration: str = "1s"):
+def run_script(scriptPath: str = None, vus: int = 1, duration: str = "1s", debug: bool = False):
     """
     Run an arbitrary k6 script with a configurable amount of VUs and duration.
     Depending on the specs of the attacking machine, possible VU amount may
@@ -25,10 +25,10 @@ def run_script(scriptPath: str = None, vus: int = 1, duration: str = "1s"):
       Duration, written as a string, ie: `1h2m3s` etc
     """
     logger.info("Running " + scriptPath)
-    _runScript(scriptPath, vus, duration)
+    _runScript(scriptPath, vus, duration, debug)
 
 
-def stress_endpoint(endpoint: str = None, vus: int = 1, duration: str = "1s"):
+def stress_endpoint(endpoint: str = None, vus: int = 1, duration: str = "1s", debug: bool = False):
     """
     Stress a single endpoint with a configurable amount of VUs and duration.
     Depending on the specs of the attacking machine, possible VU amount may
@@ -54,7 +54,7 @@ def stress_endpoint(endpoint: str = None, vus: int = 1, duration: str = "1s"):
     )
 
     env = dict(**os.environ, CHAOS_K6_URL=endpoint)
-    r = _runScript(jsPath + "/single-endpoint.js", vus, duration, env)
+    r = _runScript(jsPath + "/single-endpoint.js", vus, duration, env, debug)
     logger.info("Stressing completed.")
     return r
 
@@ -64,6 +64,7 @@ def _runScript(
     vus: int,
     duration: str,
     environ: dict = None,
+    debug: bool = False
 ):
     if not environ:
         environ = dict(os.environ)
@@ -72,19 +73,19 @@ def _runScript(
     ]
 
     with subprocess.Popen(
-        command, stderr=subprocess.STDOUT, stdout=subprocess.PIPE, env=environ
+        command, stderr=subprocess.STDOUT, stdout=None if debug is True else subprocess.PIPE, env=environ
     ) as p:
         return p.returncode is None
 
 
-def runScript(scriptPath: str = None, vus: int = 1, duration: str = "1s"):
+def runScript(scriptPath: str = None, vus: int = 1, duration: str = "1s", debug: bool = False):
     warn_about_moved_function(
         "The action `runScript` is now called `run_script`."
         "Please consider updating your experiments accordingly.")
     return run_script(scriptPath,  vus, duration)
 
 
-def stressEndpoint(endpoint: str = None, vus: int = 1, duration: str = "1s"):
+def stressEndpoint(endpoint: str = None, vus: int = 1, duration: str = "1s", debug: bool = False):
     warn_about_moved_function(
         "The action `stressEndpoint` is now called `stress_endpoint`."
         "Please consider updating your experiments accordingly.")
