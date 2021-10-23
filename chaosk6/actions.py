@@ -8,7 +8,7 @@ from pathlib import Path
 __all__ = ["run_script", "stress_endpoint"]
 
 
-def run_script(script_path: str = None, vus: int = 1, duration: str = "1s", log_file: str = None):
+def run_script(script_path: str = None, vus: int = 1, duration: str = "1s", log_file: str = None,  debug: bool = False):
     """
     Run an arbitrary k6 script with a configurable amount of VUs and duration.
     Depending on the specs of the attacking machine, possible VU amount may
@@ -27,10 +27,16 @@ def run_script(script_path: str = None, vus: int = 1, duration: str = "1s", log_
       (Optional) Relative path to the file where output should be logged.
     """
     logger.info("Running " + script_path)
-    _runScript(script_path, vus, duration, log_file)
+    _runScript(
+        script=script_path,
+        vus=vus,
+        duration=duration,
+        log_file=log_file,
+        debug=debug
+    )
 
 
-def stress_endpoint(endpoint: str = None, vus: int = 1, duration: str = "1s", log_file: str = None):
+def stress_endpoint(endpoint: str = None, vus: int = 1, duration: str = "1s", log_file: str = None, debug: bool = False):
     """
     Stress a single endpoint with a configurable amount of VUs and duration.
     Depending on the specs of the attacking machine, possible VU amount may
@@ -58,8 +64,13 @@ def stress_endpoint(endpoint: str = None, vus: int = 1, duration: str = "1s", lo
     )
 
     env = dict(**os.environ, CHAOS_K6_URL=endpoint)
-    r = _runScript(jsPath + "/single-endpoint.js",
-                   vus, duration, log_file, env)
+    r = _runScript(
+        script=jsPath + "/single-endpoint.js",
+        vus=vus,
+        duration=duration,
+        log_file=log_file,
+        environ=env,
+        debug=debug)
     logger.info("Stressing completed.")
     if log_file != None:
         logger.info("Logged K6 output to {}.".format(log_file))
@@ -72,6 +83,7 @@ def _runScript(
     duration: str,
     log_file: str,
     environ: dict = None,
+    debug: bool = False
 ):
 
     if not environ:
@@ -93,12 +105,12 @@ def _runScript(
         pipeoutput = open(log_file, "w")
 
     with subprocess.Popen(
-        command, stderr=subprocess.STDOUT, stdout=pipeoutput, env=environ
+        command, stderr=subprocess.STDOUT, stdout=None if debug is True else pipeoutput, env=environ
     ) as p:
         return p.returncode is None
 
 
-def runScript(script_path: str = None, vus: int = 1, duration: str = "1s"):
+def runScript(script_path: str = None, vus: int = 1, duration: str = "1s", debug: bool = False):
     warn_about_moved_function(
         "The action `runScript` is now called `run_script`."
         "Please consider updating your experiments accordingly.")
