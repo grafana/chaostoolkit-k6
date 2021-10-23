@@ -77,8 +77,13 @@ def _runScript(
     if not environ:
         environ = dict(os.environ)
     command = [
-        "k6", "run", "-quiet", script, "--vus", str(
-            vus), "--duration", str(duration)
+        "k6",
+        "run",
+        "-quiet",
+        script,
+        "--vus", str(vus),
+        "--duration",
+        str(duration)
     ]
 
     # Default output to the void
