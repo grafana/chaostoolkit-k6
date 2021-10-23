@@ -71,6 +71,7 @@ def stress_endpoint(endpoint: str = None, vus: int = 1, duration: str = "1s", lo
         log_file=log_file,
         environ=env,
         debug=debug)
+
     logger.info("Stressing completed.")
     if log_file != None:
         logger.info("Logged K6 output to {}.".format(log_file))
@@ -117,7 +118,7 @@ def runScript(script_path: str = None, vus: int = 1, duration: str = "1s", debug
     return run_script(script_path,  vus, duration)
 
 
-def stressEndpoint(endpoint: str = None, vus: int = 1, duration: str = "1s"):
+def stressEndpoint(endpoint: str = None, vus: int = 1, duration: str = "1s", debug: bool = False):
     warn_about_moved_function(
         "The action `stressEndpoint` is now called `stress_endpoint`."
         "Please consider updating your experiments accordingly.")
