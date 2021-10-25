@@ -1,0 +1,39 @@
+{
+    "version": "1.0.0",
+    "title": "Google Incident JSON Example",
+    "description": "Retrieve all of Google's incidents reapeatedly as an example.",
+    "tags": [],
+    "configuration": {},
+    "steady-state-hypothesis": {
+        "title": "The enpoint will continue to respond.",
+        "probes": [
+            {
+                "name": "Retrieve incidents.",
+                "type": "probe",
+                "tolerance": 200,
+                "provider": {
+                    "type": "http",
+                    "url": "https://status.cloud.google.com/incidents.json"
+                }
+            }
+        ]
+    },
+    "method": [
+        {
+            "name": "Retrieve all incidents repeatedly.",
+            "type": "action",
+            "provider": {
+                "type": "python",
+                "module": "chaosk6.actions",
+                "func": "stress_endpoint",
+                "arguments": {
+                    "endpoint": "https://status.cloud.google.com/incidents.json",
+                    "vus": 10,
+                    "duration": "5s",
+                    "log_file": "k6.log"
+                }
+            }
+        }
+    ],
+    "rollbacks": []
+}
