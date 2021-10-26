@@ -61,7 +61,6 @@ def stress_endpoint(endpoint: str = None, vus: int = 1, duration: str = "1s", lo
         'Stressing the endpoint "{}" with {} VUs for {}.'.format(
             endpoint, vus, duration
         )
-    )
 
     env = dict(**os.environ, CHAOS_K6_URL=endpoint)
     r = _runScript(
@@ -98,7 +97,11 @@ def _runScript(
         "--duration",
         str(duration)
     ]
-
+    
+    path = shutil.which('k6')
+    if not path:
+        raise ActivityFailed("the 'k6' binary cannot be found")
+    
     # Default output to the void
     pipeoutput = subprocess.DEVNULL
     # Use log file location if provided
