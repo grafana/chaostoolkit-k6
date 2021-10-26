@@ -57,14 +57,10 @@ def stress_endpoint(endpoint: str = None, vus: int = 1, duration: str = "1s", lo
     basePath = Path(__file__).parent
     jsPath = str(basePath.parent) + "/chaosk6/scripts"
 
-    try:
-        logger.info(
-            'Stressing the endpoint "{}" with {} VUs for {}.'.format(
-                endpoint, vus, duration
-            )
-     except OSError as e:
-            return print("K6 or other dependent libraries are not installed. Validate you have installed K6 correctly. https://k6.io/docs/getting-started/installation/") 
-    )
+    logger.info(
+        'Stressing the endpoint "{}" with {} VUs for {}.'.format(
+            endpoint, vus, duration
+        )
 
     env = dict(**os.environ, CHAOS_K6_URL=endpoint)
     r = _runScript(
@@ -101,7 +97,11 @@ def _runScript(
         "--duration",
         str(duration)
     ]
-
+    
+    path = shutil.which('k6')
+    if not path:
+        raise ActivityFailed("the 'k6' binary cannot be found")
+    
     # Default output to the void
     pipeoutput = subprocess.DEVNULL
     # Use log file location if provided
