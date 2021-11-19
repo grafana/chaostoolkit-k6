@@ -92,7 +92,7 @@ def _runScript(
     command = [
         "k6",
         "run",
-        "-quiet",
+        "--quiet",
         script,
         "--vus", str(vus),
         "--duration",
