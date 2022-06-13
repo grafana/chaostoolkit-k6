@@ -4,6 +4,14 @@
 
 [Unreleased]: https://github.com/k6io/chaostoolkit-k6/compare/0.3.0...HEAD
 
+## [0.3.2][] - 2021-11-19
+
+[0.3.0]: https://github.com/k6io/chaostoolkit-k6/tree/0.3.0
+
+### Changed
+
+-   Fixed issue with option for k6 command
+
 ## [0.3.0][] - 2021-04-23
 
 [0.3.0]: https://github.com/k6io/chaostoolkit-k6/tree/0.3.0
