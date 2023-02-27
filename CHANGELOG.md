@@ -2,7 +2,11 @@
 
 ## [Unreleased][]
 
-[Unreleased]: https://github.com/k6io/chaostoolkit-k6/compare/0.3.0...HEAD
+[Unreleased]: https://github.com/k6io/chaostoolkit-k6/compare/0.3.3...HEAD
+
+### Changed
+
+- Fix Python minimal version requirements as per https://github.com/pypa/packaging/issues/673
 
 ## [0.3.0][] - 2021-04-23
 
