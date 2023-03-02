@@ -12,7 +12,7 @@ from chaoslib.types import Discovery, DiscoveredActivities
 """Top-level package for chaostoolkit-k6."""
 
 __all__ = ["discover"]
-__version__ = "0.3.3"
+__version__ = "0.3.4"
 
 
 def discover(discover_system: bool = True) -> Discovery:
