@@ -67,4 +67,4 @@ def http(
         stderr=subprocess.STDOUT,
         stdout=None if debug is True else subprocess.PIPE,
     ) as p:
-        return p.returncode is None
+        return p.wait() == 0
