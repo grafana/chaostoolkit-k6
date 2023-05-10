@@ -108,7 +108,7 @@ def _runScript(
     with subprocess.Popen(
         command, stderr=subprocess.STDOUT, stdout=None if debug is True else pipeoutput, env=environ
     ) as p:
-        return p.returncode is None
+        return p.wait() == 0
 
 
 def runScript(script_path: str = None, vus: int = 1, duration: str = "1s", debug: bool = False):
